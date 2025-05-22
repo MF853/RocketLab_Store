@@ -1,0 +1,36 @@
+{
+  "products": [
+    {
+      "id": 1,
+      "name": "Smartphone XYZ",
+      "description": "Smartphone último modelo com câmera de alta resolução e processador potente",
+      "price": 2499.99,
+      "stock": 15,
+      "image": "https://via.placeholder.com/200"
+    },
+    {
+      "id": 2,
+      "name": "Notebook Pro",
+      "description": "Notebook profissional com processador de última geração e SSD rápido",
+      "price": 4999.99,
+      "stock": 8,
+      "image": "https://via.placeholder.com/200"
+    },
+    {
+      "id": 3,
+      "name": "Fone de Ouvido Wireless",
+      "description": "Fone de ouvido sem fio com cancelamento de ruído ativo",
+      "price": 599.99,
+      "stock": 25,
+      "image": "https://via.placeholder.com/200"
+    },
+    {
+      "id": 4,
+      "name": "Smart Watch Sport",
+      "description": "Relógio inteligente com monitor cardíaco e GPS integrado",
+      "price": 899.99,
+      "stock": 12,
+      "image": "https://via.placeholder.com/200"
+    }
+  ]
+} 

@@ -1,73 +1,84 @@
-# React + TypeScript + Vite
+# 🚀 RocketLab Store
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Uma loja virtual moderna construída com React, TypeScript e Vite, usando o tema Dracula para uma experiência visual única.
 
-Currently, two official plugins are available:
+## ✨ Funcionalidades
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- 🛍️ **Catálogo de Produtos**
+  - Visualização em grid responsiva
+  - Detalhes completos do produto
+  - Imagens e especificações técnicas
 
-## Expanding the ESLint configuration
+- 🛒 **Carrinho de Compras**
+  - Adição/remoção de produtos
+  - Atualização de quantidades
+  - Persistência local
+  - Resumo do pedido
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 💰 **Sistema de Alertas de Preço**
+  - Definição de preço desejado
+  - Notificações automáticas
+  - Gerenciamento de alertas
+  - Persistência local
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+- 🔔 **Sistema de Notificações**
+  - Notificações em tempo real
+  - Indicador de não lidas
+  - Marcação como lido
+  - Remoção individual ou em massa
+  - Persistência local
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## 🎨 Design
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+- Interface moderna com tema Dracula
+- Layout totalmente responsivo
+- Animações suaves
+- Feedback visual claro
+- Ícones e elementos visuais consistentes
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
-```
-## Resources
+## 🛠️ Tecnologias
 
-- [pnpm Installation](https://pnpm.io/installation)
-- [Vite Guide](https://vite.dev/guide/)
-- [React Router DOM](https://www.npmjs.com/package/react-router-dom)
-- [Tailwind CSS with Vite](https://tailwindcss.com/docs/installation/using-vite)
-- [React Documentation](https://react.dev/reference/react)
+- [React](https://react.dev/) - Biblioteca UI
+- [TypeScript](https://www.typescriptlang.org/) - Tipagem estática
+- [Vite](https://vitejs.dev/) - Build tool
+- [Tailwind CSS](https://tailwindcss.com/) - Framework CSS
+- [React Router DOM](https://reactrouter.com/) - Roteamento
+- [Context API](https://react.dev/reference/react/useContext) - Gerenciamento de estado
 
-## Getting Started
+## 🚀 Começando
 
-To run this project locally:
+Para rodar este projeto localmente:
 
 ```bash
-# Install dependencies
-pnpm i
+# Clone o repositório
+git clone [url-do-repositório]
 
-# Start the development server
+# Entre no diretório
+cd RocketLab_Store
+
+# Instale as dependências
+pnpm install
+
+# Inicie o servidor de desenvolvimento
 pnpm dev
 ```
+
+## 📱 Layout Responsivo
+
+O projeto é totalmente responsivo e se adapta a diferentes tamanhos de tela:
+
+- 📱 Mobile: Layout otimizado para dispositivos móveis
+- 💻 Tablet: Adaptação para telas médias
+- 🖥️ Desktop: Experiência completa para telas grandes
+
+## 🎯 Próximos Passos
+
+- [ ] Implementação de backend
+- [ ] Sistema de autenticação
+- [ ] Integração com gateway de pagamento
+- [ ] Histórico de pedidos
+- [ ] Sistema de busca avançada
+
+## 📝 Licença
+
+Este projeto está sob a licença MIT. Veja o arquivo [LICENSE](LICENSE) para mais detalhes.

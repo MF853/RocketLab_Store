@@ -1,5 +1,6 @@
 import { useParams, useNavigate } from 'react-router-dom';
 import { useCart } from '../contexts/CartContext';
+import { PriceAlertButton } from '../components/PriceAlertButton';
 import productsData from '../data/products.json';
 
 export function ProductPage() {
@@ -101,6 +102,13 @@ export function ProductPage() {
                       </svg>
                       {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Fora de Estoque'}
                     </button>
+
+                    {/* Botão Alerta de Preço */}
+                    <PriceAlertButton
+                      productId={product.id}
+                      productName={product.name}
+                      currentPrice={product.price}
+                    />
                   </div>
                 </div>
               </div>
@@ -174,6 +182,13 @@ export function ProductPage() {
                     </svg>
                     {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Fora de Estoque'}
                   </button>
+
+                  {/* Botão Alerta de Preço */}
+                  <PriceAlertButton
+                    productId={product.id}
+                    productName={product.name}
+                    currentPrice={product.price}
+                  />
                 </div>
               </div>
             </div>

@@ -1,9 +1,12 @@
 import { useState } from 'react'
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CartProvider, useCart } from './contexts/CartContext'
+import { PriceAlertProvider } from './contexts/PriceAlertContext'
+import { NotificationProvider } from './contexts/NotificationContext'
 import { ProductCard } from './components/ProductCard'
 import { Cart } from './components/Cart'
 import { CartModal } from './components/CartModal'
+import { NotificationButton } from './components/NotificationButton'
 import { Footer } from './components/Footer'
 import { ProductPage } from './pages/ProductPage'
 import productsData from './data/products.json'
@@ -15,12 +18,13 @@ function Layout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-[#282a36] flex flex-col">
       <header className="bg-[#44475a] shadow-lg sticky top-0 z-40 transition-all duration-300 border-b border-[#6272a4]">
-        <div className="container mx-auto px-4 py-4 sm:py-6">
+        <div className="container mx-auto px-4 py-4">
           <div className="flex justify-between items-center">
             <h1 className="text-2xl sm:text-3xl font-bold text-[#f8f8f2] transition-all duration-300">
               <a href="/" className="hover:text-[#bd93f9] transition-colors">RocketLab Store</a>
             </h1>
-            <div className="space-x-2 sm:space-x-4">
+            <div className="flex items-center space-x-2 sm:space-x-4">
+              <NotificationButton />
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="bg-[#bd93f9] text-[#282a36] px-4 py-2 text-sm sm:text-base rounded-md hover:bg-[#ff79c6] transition-all duration-300 transform hover:scale-105 font-semibold flex items-center gap-2"
@@ -73,12 +77,14 @@ function App() {
   return (
     <BrowserRouter>
       <CartProvider>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/product/:id" element={<ProductPage />} />
-          </Routes>
-        </Layout>
+        <PriceAlertProvider>
+          <NotificationProvider>
+            <Routes>
+              <Route path="/" element={<Layout><HomePage /></Layout>} />
+              <Route path="/product/:id" element={<Layout><ProductPage /></Layout>} />
+            </Routes>
+          </NotificationProvider>
+        </PriceAlertProvider>
       </CartProvider>
     </BrowserRouter>
   )

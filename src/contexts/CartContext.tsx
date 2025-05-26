@@ -1,11 +1,23 @@
-import { createContext, useContext, useState } from 'react';
+import { createContext, useContext, useState, useEffect } from 'react';
 import type { ReactNode } from 'react';
 import type { CartContextType, CartItem, Product } from '../types';
 
 const CartContext = createContext<CartContextType | undefined>(undefined);
 
 export const CartProvider = ({ children }: { children: ReactNode }) => {
-  const [cart, setCart] = useState<CartItem[]>([]);
+  const [cart, setCart] = useState<CartItem[]>(() => {
+    const savedCart = localStorage.getItem('cart');
+    return savedCart ? JSON.parse(savedCart) : [];
+  });
+
+  const total = cart.reduce(
+    (sum, item) => sum + item.product.price * item.quantity,
+    0
+  );
+
+  useEffect(() => {
+    localStorage.setItem('cart', JSON.stringify(cart));
+  }, [cart]);
 
   const addToCart = (product: Product) => {
     setCart(currentCart => {
@@ -28,28 +40,23 @@ export const CartProvider = ({ children }: { children: ReactNode }) => {
   };
 
   const updateQuantity = (productId: number, quantity: number) => {
-    if (quantity < 1) {
-      removeFromCart(productId);
-      return;
-    }
+    setCart(currentCart => {
+      if (quantity <= 0) {
+        return currentCart.filter(item => item.product.id !== productId);
+      }
 
-    setCart(currentCart =>
-      currentCart.map(item =>
+      return currentCart.map(item =>
         item.product.id === productId
           ? { ...item, quantity }
           : item
-      )
-    );
+      );
+    });
   };
 
   const clearCart = () => {
     setCart([]);
+    localStorage.removeItem('cart');
   };
-
-  const total = cart.reduce(
-    (sum, item) => sum + item.product.price * item.quantity,
-    0
-  );
 
   return (
     <CartContext.Provider

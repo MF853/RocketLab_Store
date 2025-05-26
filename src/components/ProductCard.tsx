@@ -1,4 +1,5 @@
 import { useCart } from '../contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
 import type { Product } from '../types/Product';
 
 interface ProductCardProps {
@@ -7,10 +8,18 @@ interface ProductCardProps {
 
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    navigate(`/product/${product.id}`);
+  };
 
   return (
-    <div className="bg-[#44475a] rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-[#6272a4] h-full flex flex-col">
-      <div className="w-full h-64 bg-[#282a36] flex items-center justify-center p-4">
+    <div 
+      className="bg-[#44475a] rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-[#6272a4] h-full flex flex-col cursor-pointer"
+      onClick={handleClick}
+    >
+      <div className="w-full h-64 bg-[#f8f8f2] flex items-center justify-center p-4">
         <img
           src={product.image}
           alt={product.name}
@@ -33,7 +42,10 @@ export const ProductCard = ({ product }: ProductCardProps) => {
             </span>
           </div>
           <button
-            onClick={() => addToCart(product)}
+            onClick={(e) => {
+              e.stopPropagation();
+              addToCart(product);
+            }}
             disabled={product.stock === 0}
             className="w-full bg-[#bd93f9] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#ff79c6] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
           >

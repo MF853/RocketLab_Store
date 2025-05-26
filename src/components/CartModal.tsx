@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useCart } from '../contexts/CartContext';
+import { useNavigate } from 'react-router-dom';
 
 interface CartModalProps {
   isOpen: boolean;
@@ -9,6 +10,7 @@ interface CartModalProps {
 export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
   // Hook personalizado para acessar o estado e funções do carrinho
   const { cart, updateQuantity, clearCart, total } = useCart();
+  const navigate = useNavigate();
   // Estado para controlar a animação de fade do modal
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -29,6 +31,11 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
     alert('Compra finalizada com sucesso!');
     clearCart();
     onClose();
+  };
+
+  const handleProductClick = (productId: number) => {
+    onClose();
+    navigate(`/product/${productId}`);
   };
 
   return (
@@ -54,9 +61,19 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
             <div className="space-y-4">
               {cart.map((item) => (
                 <div key={item.product.id} className="flex items-center gap-4 bg-[#44475a] p-4 rounded-lg">
-                  <img src={item.product.image} alt={item.product.name} className="w-20 h-20 object-cover rounded-md bg-[#282a36]" />
+                  <div 
+                    className="w-20 h-20 flex-shrink-0 cursor-pointer"
+                    onClick={() => handleProductClick(item.product.id)}
+                  >
+                    <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover rounded-md" />
+                  </div>
                   <div className="flex-grow">
-                    <h3 className="text-[#f8f8f2] font-semibold">{item.product.name}</h3>
+                    <h3 
+                      className="text-[#f8f8f2] font-semibold cursor-pointer hover:text-[#bd93f9]"
+                      onClick={() => handleProductClick(item.product.id)}
+                    >
+                      {item.product.name}
+                    </h3>
                     <p className="text-[#6272a4] text-sm">
                       {new Intl.NumberFormat('pt-BR', {
                         style: 'currency',
@@ -66,8 +83,8 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                   </div>
                   <div className="flex items-center gap-2">
                     <button
-                      onClick={() => updateQuantity(item.product.id, -1)}
-                      className="text-[#ff79c6] hover:text-[#ff92d0] transition-colors"
+                      onClick={() => updateQuantity(item.product.id, Math.max(0, item.quantity - 1))}
+                      className="text-[#f8f8f2] hover:text-[#ff79c6] transition-colors"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
@@ -75,8 +92,8 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                     </button>
                     <span className="text-[#f8f8f2] w-8 text-center">{item.quantity}</span>
                     <button
-                      onClick={() => updateQuantity(item.product.id, 1)}
-                      className="text-[#50fa7b] hover:text-[#69ff97] transition-colors"
+                      onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
+                      className="text-[#f8f8f2] hover:text-[#50fa7b] transition-colors"
                     >
                       <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
                         <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />

@@ -8,7 +8,7 @@ interface CartModalProps {
 
 export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
   // Hook personalizado para acessar o estado e funções do carrinho
-  const { cart, removeFromCart, updateQuantity, total, clearCart } = useCart();
+  const { cart, updateQuantity, clearCart, total } = useCart();
   // Estado para controlar a animação de fade do modal
   const [isAnimating, setIsAnimating] = useState(false);
 
@@ -25,127 +25,94 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
   // Não renderiza nada se o modal estiver fechado e não estiver animando
   if (!isOpen && !isAnimating) return null;
 
+  const handleCheckout = () => {
+    alert('Compra finalizada com sucesso!');
+    clearCart();
+    onClose();
+  };
+
   return (
-    // Container principal com overlay e animação de fade
-    <div className={`fixed inset-0 flex items-center justify-center z-50 transition-opacity duration-300 ${isOpen ? 'opacity-100' : 'opacity-0'}`}>
-      {/* Overlay com fundo escuro e clique para fechar */}
-      <div 
-        className={`absolute inset-0 bg-black transition-opacity duration-300 ${isOpen ? 'bg-opacity-50' : 'bg-opacity-0'}`}
-        onClick={onClose}
-      />
-      {/* Container do modal com animação de slide e tamanho responsivo */}
-      <div 
-        className={`relative bg-white rounded-lg shadow-xl w-full mx-4 sm:mx-auto sm:w-[95%] md:w-[85%] lg:w-3/4 xl:w-2/4 max-h-[90vh] overflow-y-auto transform transition-all duration-300 ${
-          isOpen ? 'translate-y-0 opacity-100' : 'translate-y-4 opacity-0'
-        }`}
-      >
-        <div className="p-4 sm:p-6">
-          {/* Cabeçalho do modal com título e botão de fechar */}
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl sm:text-2xl font-bold">Carrinho de Compras</h2>
-            <button
-              onClick={onClose}
-              className="text-gray-500 hover:text-gray-700 transition-colors duration-200"
-            >
-              <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-              </svg>
-            </button>
-          </div>
-
-          {/* Conteúdo condicional baseado no estado do carrinho */}
-          {cart.length === 0 ? (
-            <p className="text-center text-gray-600 py-8">Seu carrinho está vazio</p>
-          ) : (
-            <>
-              {/* Lista de itens do carrinho */}
-              <div className="space-y-4">
-                {cart.map((item) => (
-                  <div
-                    key={item.product.id}
-                    className="flex flex-col sm:flex-row items-start sm:items-center justify-between border-b pb-4 gap-4"
-                  >
-                    {/* Container da imagem e informações do produto */}
-                    <div className="flex items-center space-x-4">
-                      <div className="w-20 h-20 bg-black rounded-md overflow-hidden">
-                        <img
-                          src={item.product.image}
-                          alt={item.product.name}
-                          className="w-full h-full object-contain transform transition-transform duration-300 hover:scale-105 mix-blend-normal"
-                        />
-                      </div>
-                      <div>
-                        <h3 className="font-semibold text-sm sm:text-base">{item.product.name}</h3>
-                        <p className="text-gray-600 text-sm sm:text-base">
-                          {new Intl.NumberFormat('pt-BR', {
-                            style: 'currency',
-                            currency: 'BRL'
-                          }).format(item.product.price)}
-                        </p>
-                      </div>
-                    </div>
-                    
-                    {/* Controles de quantidade e botão remover */}
-                    <div className="flex items-center space-x-4 w-full sm:w-auto justify-between sm:justify-end">
-                      <div className="flex items-center space-x-2">
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity - 1)}
-                          className="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md transition-colors duration-200"
-                        >
-                          -
-                        </button>
-                        <span className="w-8 text-center">{item.quantity}</span>
-                        <button
-                          onClick={() => updateQuantity(item.product.id, item.quantity + 1)}
-                          className="bg-gray-200 hover:bg-gray-300 px-2 py-1 rounded-md transition-colors duration-200"
-                          disabled={item.quantity >= item.product.stock}
-                        >
-                          +
-                        </button>
-                      </div>
-                      <button
-                        onClick={() => removeFromCart(item.product.id)}
-                        className="text-red-600 hover:text-red-800 transition-colors duration-200"
-                      >
-                        Remover
-                      </button>
-                    </div>
-                  </div>
-                ))}
-              </div>
-
-              {/* Rodapé do modal com total e botões de ação */}
-              <div className="mt-6 space-y-4">
-                <div className="flex justify-between text-xl font-bold">
-                  <span>Total:</span>
-                  <span>
-                    {new Intl.NumberFormat('pt-BR', {
-                      style: 'currency',
-                      currency: 'BRL'
-                    }).format(total)}
-                  </span>
-                </div>
-                <div className="flex flex-col sm:flex-row gap-2 sm:gap-4">
-                  <button
-                    onClick={clearCart}
-                    className="w-full bg-gray-600 text-white px-4 py-2 rounded-md hover:bg-gray-700 transition-all duration-300 transform hover:scale-105"
-                  >
-                    Limpar Carrinho
-                  </button>
-                  <button
-                    onClick={() => {
-                      alert('Compra finalizada com sucesso!');
-                      onClose();
-                    }}
-                    className="w-full bg-green-600 text-white px-4 py-2 rounded-md hover:bg-green-700 transition-all duration-300 transform hover:scale-105"
-                  >
-                    Finalizar Compra
-                  </button>
-                </div>
-              </div>
-            </>
-          )}
+    <div className="fixed inset-0 z-50 flex items-center justify-center">
+      <div className="absolute inset-0 bg-black/50" onClick={onClose}></div>
+      <div className="relative bg-[#282a36] p-6 rounded-lg shadow-xl max-w-lg w-full mx-4 max-h-[90vh] overflow-y-auto border border-[#6272a4]">
+        <div className="flex justify-between items-center mb-4">
+          <h2 className="text-2xl font-bold text-[#f8f8f2]">Carrinho</h2>
+          <button
+            onClick={onClose}
+            className="text-[#ff79c6] hover:text-[#ff92d0] transition-colors"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
         </div>
+
+        {cart.length === 0 ? (
+          <p className="text-[#f8f8f2] text-center py-4">Seu carrinho está vazio</p>
+        ) : (
+          <>
+            <div className="space-y-4">
+              {cart.map((item) => (
+                <div key={item.product.id} className="flex items-center gap-4 bg-[#44475a] p-4 rounded-lg">
+                  <img src={item.product.image} alt={item.product.name} className="w-20 h-20 object-cover rounded-md bg-[#282a36]" />
+                  <div className="flex-grow">
+                    <h3 className="text-[#f8f8f2] font-semibold">{item.product.name}</h3>
+                    <p className="text-[#6272a4] text-sm">
+                      {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                      }).format(item.product.price)}
+                    </p>
+                  </div>
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => updateQuantity(item.product.id, -1)}
+                      className="text-[#ff79c6] hover:text-[#ff92d0] transition-colors"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M3 10a1 1 0 011-1h12a1 1 0 110 2H4a1 1 0 01-1-1z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                    <span className="text-[#f8f8f2] w-8 text-center">{item.quantity}</span>
+                    <button
+                      onClick={() => updateQuantity(item.product.id, 1)}
+                      className="text-[#50fa7b] hover:text-[#69ff97] transition-colors"
+                    >
+                      <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fillRule="evenodd" d="M10 3a1 1 0 011 1v5h5a1 1 0 110 2h-5v5a1 1 0 11-2 0v-5H4a1 1 0 110-2h5V4a1 1 0 011-1z" clipRule="evenodd" />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              ))}
+            </div>
+            <div className="mt-6 border-t border-[#6272a4] pt-4">
+              <div className="flex justify-between items-center mb-4">
+                <span className="text-[#f8f8f2] font-semibold">Total:</span>
+                <span className="text-[#50fa7b] text-xl font-bold">
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  }).format(total)}
+                </span>
+              </div>
+              <div className="flex gap-2">
+                <button
+                  onClick={clearCart}
+                  className="w-1/2 bg-[#44475a] text-[#f8f8f2] py-2 rounded-md hover:bg-[#6272a4] transition-colors font-semibold"
+                >
+                  Limpar
+                </button>
+                <button
+                  onClick={handleCheckout}
+                  className="w-1/2 bg-[#bd93f9] text-[#282a36] py-2 rounded-md hover:bg-[#ff79c6] transition-colors font-semibold"
+                >
+                  Finalizar
+                </button>
+              </div>
+            </div>
+          </>
+        )}
       </div>
     </div>
   );

@@ -126,15 +126,29 @@ export function NotificationButton() {
                             </p>
                           </div>
                         </div>
-                        <button
-                          onClick={() => removeNotification(notification.id)}
-                          className="absolute top-2 right-2 text-[#ff5555] hover:text-[#ff6e6e] transition-colors p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
-                          aria-label="Remover notificação"
-                        >
-                          <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
-                            <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
-                          </svg>
-                        </button>
+                        <div className="absolute top-2 right-2 flex gap-2">
+                          {!notification.read && (
+                            <button
+                              onClick={() => markAsRead(notification.id)}
+                              className="text-[#bd93f9] hover:text-[#ff79c6] transition-colors p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                              aria-label="Marcar como lida"
+                            >
+                              <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z" />
+                              </svg>
+                            </button>
+                          )}
+                          <button
+                            onClick={() => removeNotification(notification.id)}
+                            className="text-[#ff5555] hover:text-[#ff6e6e] transition-colors p-1 opacity-100 sm:opacity-0 sm:group-hover:opacity-100"
+                            aria-label="Remover notificação"
+                          >
+                            <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4" viewBox="0 0 20 20" fill="currentColor">
+                              <path fillRule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clipRule="evenodd" />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
                     ))}
                   </div>

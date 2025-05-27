@@ -1,6 +1,8 @@
+import { useState } from 'react';
 import { useCart } from '../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../types/Product';
+import { PurchaseConfirmationModal } from './PurchaseConfirmationModal';
 
 interface ProductCardProps {
   product: Product;
@@ -9,50 +11,80 @@ interface ProductCardProps {
 export const ProductCard = ({ product }: ProductCardProps) => {
   const { addToCart } = useCart();
   const navigate = useNavigate();
+  const [showConfirmation, setShowConfirmation] = useState(false);
 
   const handleClick = () => {
     navigate(`/product/${product.id}`);
   };
 
+  const handleBuyNow = (e: React.MouseEvent) => {
+    e.stopPropagation();
+    setShowConfirmation(true);
+  };
+
+  const handleConfirmPurchase = () => {
+    setShowConfirmation(false);
+    // You might want to add additional logic here, like saving the order to a database
+  };
+
   return (
-    <div 
-      className="bg-[#44475a] rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-[#6272a4] h-full flex flex-col cursor-pointer"
-      onClick={handleClick}
-    >
-      <div className="w-full h-64 bg-[#f8f8f2] flex items-center justify-center p-4">
-        <img
-          src={product.image}
-          alt={product.name}
-          className="w-full h-full object-contain"
-        />
-      </div>
-      <div className="p-4 flex flex-col flex-grow">
-        <h3 className="text-lg font-semibold text-[#f8f8f2] mb-2 truncate">{product.name}</h3>
-        <p className="text-[#bd93f9] text-sm mb-4 line-clamp-2 flex-grow">{product.description}</p>
-        <div className="flex flex-col gap-2">
-          <div className="flex justify-between items-center">
-            <span className="text-lg font-bold text-[#50fa7b]">
-              {new Intl.NumberFormat('pt-BR', {
-                style: 'currency',
-                currency: 'BRL'
-              }).format(product.price)}
-            </span>
-            <span className="text-sm text-[#6272a4]">
-              {product.stock > 0 ? `${product.stock} em estoque` : 'Fora de estoque'}
-            </span>
+    <>
+      <div 
+        className="bg-[#44475a] rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-[#6272a4] h-full flex flex-col cursor-pointer"
+        onClick={handleClick}
+      >
+        <div className="w-full h-64 bg-[#f8f8f2] flex items-center justify-center p-4">
+          <img
+            src={product.image}
+            alt={product.name}
+            className="w-full h-full object-contain"
+          />
+        </div>
+        <div className="p-4 flex flex-col flex-grow">
+          <h3 className="text-lg font-semibold text-[#f8f8f2] mb-2 truncate">{product.name}</h3>
+          <p className="text-[#bd93f9] text-sm mb-4 line-clamp-2 flex-grow">{product.description}</p>
+          <div className="flex flex-col gap-2">
+            <div className="flex justify-between items-center">
+              <span className="text-lg font-bold text-[#50fa7b]">
+                {new Intl.NumberFormat('pt-BR', {
+                  style: 'currency',
+                  currency: 'BRL'
+                }).format(product.price)}
+              </span>
+              <span className="text-sm text-[#6272a4]">
+                {product.stock > 0 ? `${product.stock} em estoque` : 'Fora de estoque'}
+              </span>
+            </div>
+            <div className="flex gap-2">
+              <button
+                onClick={(e) => {
+                  e.stopPropagation();
+                  addToCart(product);
+                }}
+                disabled={product.stock === 0}
+                className="flex-1 bg-[#bd93f9] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#ff79c6] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+              >
+                {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Fora de Estoque'}
+              </button>
+              <button
+                onClick={handleBuyNow}
+                disabled={product.stock === 0}
+                className="flex-1 bg-[#50fa7b] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#69ff93] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+              >
+                Comprar Agora
+              </button>
+            </div>
           </div>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              addToCart(product);
-            }}
-            disabled={product.stock === 0}
-            className="w-full bg-[#bd93f9] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#ff79c6] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
-          >
-            {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Fora de Estoque'}
-          </button>
         </div>
       </div>
-    </div>
+
+      <PurchaseConfirmationModal
+        isOpen={showConfirmation}
+        onClose={() => setShowConfirmation(false)}
+        onConfirm={handleConfirmPurchase}
+        items={[{ product, quantity: 1 }]}
+        total={product.price}
+      />
+    </>
   );
 }; 

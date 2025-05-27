@@ -36,7 +36,7 @@ E-commerce moderno construído com React e TypeScript, usando tema Dracula.
 
 ```bash
 # Clone o repositório
-git clone (https://github.com/MF853/RocketLab_Store.git)
+git clone https://github.com/MF853/RocketLab_Store.git
 
 # Instale as dependências
 pnpm install

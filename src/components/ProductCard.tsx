@@ -3,12 +3,13 @@ import { useCart } from '../contexts/CartContext';
 import { useNavigate } from 'react-router-dom';
 import type { Product } from '../types/Product';
 import { PurchaseConfirmationModal } from './PurchaseConfirmationModal';
+import { WishlistToggle } from './WishlistToggle';
 
 interface ProductCardProps {
   product: Product;
 }
 
-export const ProductCard = ({ product }: ProductCardProps) => {
+export function ProductCard({ product }: ProductCardProps) {
   const { addToCart } = useCart();
   const navigate = useNavigate();
   const [showConfirmation, setShowConfirmation] = useState(false);
@@ -29,47 +30,55 @@ export const ProductCard = ({ product }: ProductCardProps) => {
 
   return (
     <>
-      <div 
-        className="bg-[#44475a] rounded-lg shadow-lg overflow-hidden transform transition-all duration-300 hover:scale-105 border border-[#6272a4] h-full flex flex-col cursor-pointer"
+      <div
         onClick={handleClick}
+        className="bg-[#44475a] rounded-lg shadow-lg overflow-hidden transition-transform duration-300 transform hover:scale-105 cursor-pointer relative group"
       >
-        <div className="w-full h-64 bg-[#f8f8f2] flex items-center justify-center p-4">
+        <div className="relative aspect-square bg-white">
+          <WishlistToggle
+            product={product}
+            className="top-2 right-2 opacity-0 group-hover:opacity-100"
+          />
           <img
             src={product.image}
             alt={product.name}
-            className="w-full h-full object-contain"
+            className="w-full h-full object-contain p-4"
           />
         </div>
-        <div className="p-4 flex flex-col flex-grow">
-          <h3 className="text-lg font-semibold text-[#f8f8f2] mb-2 truncate">{product.name}</h3>
-          <p className="text-[#bd93f9] text-sm mb-4 line-clamp-2 flex-grow">{product.description}</p>
+        <div className="p-4">
+          <h3 className="text-[#f8f8f2] font-semibold text-lg mb-2 line-clamp-2">
+            {product.name}
+          </h3>
           <div className="flex flex-col gap-2">
-            <div className="flex justify-between items-center">
-              <span className="text-lg font-bold text-[#50fa7b]">
+            <div className="flex items-baseline gap-2">
+              <span className="text-[#bd93f9] text-xl font-bold">
                 {new Intl.NumberFormat('pt-BR', {
                   style: 'currency',
                   currency: 'BRL'
                 }).format(product.price)}
               </span>
-              <span className="text-sm text-[#6272a4]">
-                {product.stock > 0 ? `${product.stock} em estoque` : 'Fora de estoque'}
-              </span>
+              {product.oldPrice && (
+                <span className="text-[#6272a4] text-sm line-through">
+                  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                  }).format(product.oldPrice)}
+                </span>
+              )}
             </div>
-            <div className="flex gap-2">
+            <div className="grid grid-cols-2 gap-2">
               <button
                 onClick={(e) => {
                   e.stopPropagation();
                   addToCart(product);
                 }}
-                disabled={product.stock === 0}
-                className="flex-1 bg-[#bd93f9] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#ff79c6] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+                className="bg-[#bd93f9] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#ff79c6] transition-all duration-300 transform hover:scale-105 font-semibold"
               >
-                {product.stock > 0 ? 'Adicionar ao Carrinho' : 'Fora de Estoque'}
+                Adicionar ao Carrinho
               </button>
               <button
                 onClick={handleBuyNow}
-                disabled={product.stock === 0}
-                className="flex-1 bg-[#50fa7b] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#69ff93] transition-colors duration-200 disabled:opacity-50 disabled:cursor-not-allowed font-semibold"
+                className="bg-[#50fa7b] text-[#282a36] px-4 py-2 rounded-md hover:bg-[#69ff97] transition-all duration-300 transform hover:scale-105 font-semibold"
               >
                 Comprar Agora
               </button>
@@ -87,4 +96,4 @@ export const ProductCard = ({ product }: ProductCardProps) => {
       />
     </>
   );
-}; 
+} 

@@ -3,13 +3,16 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import { CartProvider, useCart } from './contexts/CartContext'
 import { PriceAlertProvider } from './contexts/PriceAlertContext'
 import { NotificationProvider } from './contexts/NotificationContext'
+import { WishlistProvider } from './contexts/WishlistContext'
 import { ProductCard } from './components/ProductCard'
 import { Cart } from './components/Cart'
 import { CartModal } from './components/CartModal'
 import { NotificationButton } from './components/NotificationButton'
+import { WishlistButton } from './components/WishlistButton'
 import { CategoryFilter } from './components/CategoryFilter'
 import { Footer } from './components/Footer'
 import { ProductPage } from './pages/ProductPage'
+import { WishlistPage } from './pages/WishlistPage'
 import type { ProductCategory, ProductsData } from './types/Product'
 import rawProductsData from './data/products.json'
 
@@ -40,6 +43,7 @@ function Layout({ children }: { children: React.ReactNode }) {
             </h1>
             <div className="flex items-center space-x-2 sm:space-x-4">
               <NotificationButton />
+              <WishlistButton />
               <button
                 onClick={() => setIsModalOpen(true)}
                 className="bg-[#bd93f9] text-[#282a36] px-4 py-2 text-sm sm:text-base rounded-md hover:bg-[#ff79c6] transition-all duration-300 transform hover:scale-105 font-semibold flex items-center gap-2"
@@ -146,10 +150,13 @@ function App() {
       <CartProvider>
         <PriceAlertProvider>
           <NotificationProvider>
-            <Routes>
-              <Route path="/" element={<Layout><HomePage /></Layout>} />
-              <Route path="/product/:id" element={<Layout><ProductPage /></Layout>} />
-            </Routes>
+            <WishlistProvider>
+              <Routes>
+                <Route path="/" element={<Layout><HomePage /></Layout>} />
+                <Route path="/product/:id" element={<Layout><ProductPage /></Layout>} />
+                <Route path="/wishlist" element={<Layout><WishlistPage /></Layout>} />
+              </Routes>
+            </WishlistProvider>
           </NotificationProvider>
         </PriceAlertProvider>
       </CartProvider>

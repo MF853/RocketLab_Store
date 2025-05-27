@@ -69,10 +69,14 @@ export const CartModal = ({ isOpen, onClose }: CartModalProps) => {
                 {cart.map((item) => (
                   <div key={item.product.id} className="flex items-center gap-4 bg-[#44475a] p-4 rounded-lg">
                     <div 
-                      className="w-20 h-20 flex-shrink-0 cursor-pointer"
+                      className="w-20 h-20 flex-shrink-0 cursor-pointer bg-[#f8f8f2] rounded-md overflow-hidden"
                       onClick={() => handleProductClick(item.product.id)}
                     >
-                      <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover rounded-md" />
+                      <img 
+                        src={item.product.image} 
+                        alt={item.product.name} 
+                        className="w-full h-full object-contain p-2" 
+                      />
                     </div>
                     <div className="flex-grow">
                       <h3 

@@ -1,3 +1,5 @@
+export type ProductCategory = 'perifericos' | 'componentes' | 'eletronicos';
+
 export interface Product {
   id: number;
   name: string;
@@ -5,4 +7,10 @@ export interface Product {
   price: number;
   image: string;
   stock: number;
+  category: ProductCategory;
+  specs: Record<string, string>;
+}
+
+export interface ProductsData {
+  products: Product[];
 } 

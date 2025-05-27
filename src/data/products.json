@@ -4,6 +4,7 @@
       "id": 1,
       "name": "iPhone 15 Pro Max",
       "description": "O iPhone mais avançado com chip A17 Pro, câmera principal de 48MP e design em titânio",
+      "category": "eletronicos",
       "specs": {
         "Processador": "A17 Pro com Neural Engine",
         "Tela": "6.7\" Super Retina XDR OLED",
@@ -21,6 +22,7 @@
       "id": 2,
       "name": "Samsung Galaxy Book3 Ultra",
       "description": "Notebook premium com processador Intel Core i9, RTX 4070 e tela AMOLED de 16 polegadas",
+      "category": "eletronicos",
       "specs": {
         "Processador": "Intel Core i9-13900H",
         "GPU": "NVIDIA GeForce RTX 4070 8GB",
@@ -38,6 +40,7 @@
       "id": 3,
       "name": "JBL Tune 770NC",
       "description": "Fone de ouvido bluetooth com cancelamento de ruído ativo e até 70 horas de bateria",
+      "category": "perifericos",
       "specs": {
         "Driver": "40mm Dinâmico",
         "Bluetooth": "5.3",
@@ -55,6 +58,7 @@
       "id": 4,
       "name": "Apple Watch Series 10",
       "description": "Smartwatch com chip S10, tela Always-On Retina e monitoramento avançado de saúde",
+      "category": "eletronicos",
       "specs": {
         "Processador": "Chip S10 com Neural Engine",
         "Tela": "Always-On Retina LTPO OLED",
@@ -72,6 +76,7 @@
       "id": 5,
       "name": "Samsung Galaxy Tab S9 Ultra",
       "description": "Tablet premium com tela AMOLED de 14.6\", S Pen incluída e processador Snapdragon 8 Gen 2",
+      "category": "eletronicos",
       "specs": {
         "Processador": "Snapdragon 8 Gen 2",
         "Tela": "14.6\" Dynamic AMOLED 2X",
@@ -89,6 +94,7 @@
       "id": 6,
       "name": "Canon EOS R6 Mark II",
       "description": "Câmera mirrorless profissional com gravação 4K 60fps e 40fps em fotos",
+      "category": "eletronicos",
       "specs": {
         "Sensor": "24.2MP Full-Frame CMOS",
         "Processador": "DIGIC X",
@@ -106,6 +112,7 @@
       "id": 7,
       "name": "Samsung Odyssey OLED G9",
       "description": "Monitor gamer curvo 49\" com taxa de 240Hz e tempo de resposta de 0.03ms",
+      "category": "perifericos",
       "specs": {
         "Painel": "OLED Quantum Dot",
         "Tamanho": "49\" Curvo 1800R",
@@ -123,6 +130,7 @@
       "id": 8,
       "name": "Logitech G Pro X Superlight",
       "description": "Mouse gamer sem fio ultraleve com sensor HERO 25K e menos de 63g",
+      "category": "perifericos",
       "specs": {
         "Sensor": "HERO 25K",
         "DPI": "100-25.600",
@@ -140,6 +148,7 @@
       "id": 9,
       "name": "Razer BlackWidow V4 Pro",
       "description": "Teclado mecânico gamer com switches Razer Green, RGB por tecla e apoio de pulso",
+      "category": "perifericos",
       "specs": {
         "Switches": "Razer Green Mechanical",
         "Iluminação": "Razer Chroma RGB",
@@ -157,6 +166,7 @@
       "id": 10,
       "name": "NVIDIA GeForce RTX 4090",
       "description": "Placa de vídeo topo de linha com 24GB GDDR6X, Ray Tracing e DLSS 3.0 para gaming em 4K",
+      "category": "componentes",
       "specs": {
         "GPU": "NVIDIA Ada Lovelace",
         "CUDA Cores": "16384",
@@ -174,6 +184,7 @@
       "id": 11,
       "name": "Samsung Galaxy Watch 6 Classic",
       "description": "Smartwatch com moldura giratória, monitoramento de saúde avançado e WearOS",
+      "category": "eletronicos",
       "specs": {
         "Processador": "Exynos W930 Dual-Core",
         "Tela": "1.5\" Super AMOLED",
@@ -191,6 +202,7 @@
       "id": 12,
       "name": "Samsung 990 PRO SSD 2TB",
       "description": "SSD NVMe com velocidades de até 7450MB/s para leitura e 6900MB/s para gravação",
+      "category": "componentes",
       "specs": {
         "Capacidade": "2TB",
         "Interface": "PCIe 4.0 x4 NVMe",

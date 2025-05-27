@@ -72,8 +72,12 @@ export const PurchaseConfirmationModal = ({
               <h3 className="text-[#f8f8f2] font-semibold mb-2">Resumo do Pedido:</h3>
               {items.map((item) => (
                 <div key={item.product.id} className="flex items-center gap-4 bg-[#44475a] p-4 rounded-lg">
-                  <div className="w-16 h-16 flex-shrink-0">
-                    <img src={item.product.image} alt={item.product.name} className="w-full h-full object-cover rounded-md" />
+                  <div className="w-16 h-16 flex-shrink-0 bg-[#f8f8f2] rounded-md overflow-hidden">
+                    <img 
+                      src={item.product.image} 
+                      alt={item.product.name} 
+                      className="w-full h-full object-contain p-2"
+                    />
                   </div>
                   <div className="flex-grow">
                     <h4 className="text-[#f8f8f2] font-semibold">{item.product.name}</h4>
